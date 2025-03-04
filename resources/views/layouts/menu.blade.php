@@ -40,7 +40,7 @@
 <!-- Navbar Start -->
 <div class="container-fluid position-relative p-0">
     <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
-        <a href="index.html" class="navbar-brand p-0">
+        <a href="{{route('home')}}" class="navbar-brand p-0">
             <h1 class="m-0"> <img src="{{asset('/images/logo.png')}}" alt="" style="height: 50px;width:80px"> Blog</h1>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -48,8 +48,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
-                <a href="{{route('home')}}" class="nav-item nav-link">Home</a>
-                <a href="#" class="nav-item nav-link">About</a>
+                <a href="{{route('home')}}" class="nav-item nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }}">Home</a>
+                <a href="{{route('about')}}" class="nav-item nav-link {{ Route::currentRouteName() == 'about' ? 'active' : '' }}">About</a>
                 {{-- <a href="#" class="nav-item nav-link">Services</a> --}}
               
                 {{-- <div class="nav-item dropdown">
@@ -62,7 +62,7 @@
                         <a href="quote.html" class="dropdown-item">Free Quote</a>
                     </div>
                 </div> --}}
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
+                <a href="{{route('contact')}}" class="nav-item nav-link {{ Route::currentRouteName() == 'contact' ? 'active' : '' }}">Contact</a>
             </div>
         
          
@@ -70,12 +70,6 @@
         </div>
     </nav>
 
-    <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
-        <div class="py-5 container">
-            <div class="pt-5 ">
-                <h1 class="text-center text-white animated zoomIn">Welcome to Dhaka Internationl University Official Blog Site</h1>              
-            </div>
-        </div>
-    </div>
+  
 </div>
 <!-- Navbar End -->

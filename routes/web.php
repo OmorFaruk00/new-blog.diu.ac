@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
 Route::get('post_details/{id}',[FrontEndController::class,'getPostDetails']);
+Route::get('about',[FrontEndController::class,'about'])->name('about');
+Route::get('contact',[FrontEndController::class,'contact'])->name('contact');

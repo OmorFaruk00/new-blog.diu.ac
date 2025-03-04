@@ -1,6 +1,97 @@
 @extends('layouts.master')
 @section('content')
+<style>
+  
 
+    /* Flash News Container */
+    .flash-news-container {
+        background-color: #06A3DA;
+        color: white;
+        padding: 15px 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: bold;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    /* Responsive Container */
+    /* .container {
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 15px;
+    } */
+
+    /* News Ticker Wrapper */
+    .news-ticker {
+        flex: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        position: relative;
+    }
+
+    /* Scrolling News Text */
+    .news-text {
+        display: inline-block;
+        white-space: nowrap;
+        padding-left: 100%;
+        animation: scrollNews 30s linear infinite;
+    }
+
+    /* Keyframes for Scrolling Animation */
+    @keyframes scrollNews {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(-100%);
+        }
+    }
+
+    /* Date & Time */
+    .date-time {
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .flash-news-container {
+            flex-direction: column;
+            text-align: center;
+        }
+        .news-ticker {
+            text-align: center;
+            margin: 5px 0;
+        }
+    }
+
+
+    
+</style>
+<div id="vue_app">
+    <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 50px;">
+        <div class="py-5 container">
+            <div class="pt-5 ">
+                <h1 class="text-center text-white animated zoomIn">Welcome to Dhaka Internationl University Official Blog Site</h1>              
+            </div>
+        </div>
+    </div>
+
+
+ <!-- Flash News Header with Date and Time -->
+ <div class="flash-news-container container">
+    <div>🔥 Latest Post</div>
+    <div class="news-ticker">
+        <span class="news-text" v-text="latestPost"> </span>
+    </div>
+    <div class="date-time" id="date-time"></div>
+</div>
+
+
+<!-- News Ticker -->
     <!-- Full Screen Search Start -->
     <div class="modal fade" id="searchModal" tabindex="-1">
         <div class="modal-dialog modal-fullscreen">
@@ -21,8 +112,8 @@
 
 
     <!-- blog Start -->
-    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container py-5" id="vue_app">
+    <div class="container-fluid py-3 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container py-5" >
             <div class="row g-5">
                 <!-- blog list Start -->
                 <div class="col-lg-8">
@@ -100,7 +191,7 @@
     
                     <!-- Category Start -->
                     <div class="mb-5 wow slideInUp" data-wow-delay="0.1s">
-                        <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                        <div class="section-title section-title-sm position-relative pb-3 mb-4" id="category">
                             <h3 class="mb-0">Categories</h3>
                         </div>
                         <div class="link-animated d-flex flex-column justify-content-start">
@@ -115,7 +206,7 @@
                     <!-- Category End -->
     
                     <!-- Recent blog Start -->
-                    <div class="mb-5 wow slideInUp" data-wow-delay="0.1s" id="newData">
+                    <div class="mb-5 wow slideInUp" data-wow-delay="0.1s" id="newData" id="recent">
                         <div class="section-title section-title-sm position-relative pb-3 mb-4">
                             <h3 class="mb-0">Recent blog</h3>
                         </div>
@@ -139,7 +230,7 @@
                     <!-- Image End -->
     
                     <!-- Tags Start -->
-                    <div class="mb-5 wow slideInUp" data-wow-delay="0.1s">
+                    <div class="mb-5 wow slideInUp" data-wow-delay="0.1s" id="tag">
                         <div class="section-title section-title-sm position-relative pb-3 mb-4">
                             <h3 class="mb-0">Tag Cloud</h3>
                         </div>
@@ -149,32 +240,36 @@
                     </div>
                     <!-- Tags End -->
     
-                    <!-- Plain Text Start -->
-                    {{-- <div class="wow slideInUp" data-wow-delay="0.1s">
-                        <div class="section-title section-title-sm position-relative pb-3 mb-4">
-                            <h3 class="mb-0">Plain Text</h3>
-                        </div>
-                        <div class="bg-light text-center" style="padding: 30px;">
-                            <p>Vero sea et accusam justo dolor accusam lorem consetetur, dolores sit amet sit dolor clita kasd justo, diam accusam no sea ut tempor magna takimata, amet sit et diam dolor ipsum amet diam</p>
-                            <a href="" class="btn btn-primary py-2 px-4">Read More</a>
-                        </div>
-                    </div> --}}
-                    <!-- Plain Text End -->
+                   
                 </div>
                 <!-- Sidebar End -->
             </div>
         </div>
     </div>
+</div>
     <!-- blog End -->
 
-
-  {{-- <x-vendor></x-vendor> --}}
 
 
 
     @endsection
 
-    @section('script')   
+    @section('script')  
+    <script>
+        // Function to update date and time
+        function updateDateTime() {
+            const now = new Date();
+            const formattedDate = now.toLocaleDateString('en-US', {
+                weekday: 'long', year: 'numeric', month: 'short', day: 'numeric'
+            });
+            const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('date-time').innerText = `${formattedDate} | ${formattedTime}`;
+        }
+
+        // Update date and time every second
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+    </script>
     <script type="text/javascript">
         $(document).ready(function() {
             var vue = new Vue({
@@ -192,6 +287,7 @@
                     categoryData:"",
                     tagData:"",
                     recentPostData:"",
+                    latestPost:"",
                 },
 
                 methods: {
@@ -269,6 +365,7 @@
                   axios.get(`${this.config.base_path}/public-diu-blog/recent-post`).then((
                       response) => {
                       this.recentPostData = response.data;
+                      this.latestPost = response.data[0].title;
                     
 
                   }).catch((error) => {

@@ -12,7 +12,17 @@ class FrontEndController extends Controller
    }
    public function getPostDetails($id)
    {
-       return view('post_details');
+       return view('post_details',compact('id'));
+      
+   }
+   public function about()
+   {
+     return view('about');
+      
+   }
+   public function contact()
+   {
+     return view('contact');
       
    }
 }
